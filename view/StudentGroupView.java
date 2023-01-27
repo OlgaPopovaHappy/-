@@ -1,7 +1,7 @@
 package view;
 
-import data.StudentGroup;
-import data.User;
+import data.group.StudentGroup;
+import data.user.User;
 
 import java.util.List;
 

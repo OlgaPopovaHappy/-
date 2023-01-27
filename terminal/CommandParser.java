@@ -1,12 +1,10 @@
 package terminal;
-/*
-- Создать пекедж terminal. Дальнейшие работы ведем в нем
-- Создать интерфейс CommandParser c методом String[] parseCommand (String inputCommand)
-- Создать класс TerminalReader, который содержит переменную CommandParser и
-метод, который в бесконечном цикле слушает команды с помощью Scanner(System.in)
- */
 
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public interface CommandParser {
-    public String[] parseCommand(String inputCommand);
+public class CommandParser {
+    public Command parseCommand(String inputCommand) {
+        return new Command(new ArrayList<String>(Arrays.asList(inputCommand.split(" "))));
+    }
 }

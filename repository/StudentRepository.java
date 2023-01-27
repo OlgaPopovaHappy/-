@@ -1,30 +1,25 @@
 package repository;
 
-import data.Student;
+import data.user.Student;
+import db.StudentTable;
 
-public class StudentRepository implements UserRepository<Student, Integer> {
+import java.util.List;
 
-
+public class StudentRepository implements Repository<Student> {
+    private final StudentTable studentTable;
+    public StudentRepository() {
+        this.studentTable = new StudentTable();
+    }
     @Override
-    public Student save(Student entity) {
-        return null;
+    public void save(Student entity) {
+        studentTable.save(entity);
     }
-
     @Override
-    public Student findById(Integer id) {
-        return null;
+    public void delete(Student entity) {
+        studentTable.deleteByFio(entity.getFio());
     }
 
-    @Override
-    public Student findByLastName(String LastName) {
-        return null;
-    }
-
-    public Student delete(Student student) {
-        return null;
-    }
-
-    public Student deleteStudentByGroupAndBirthday(int groupNumber, int birthday) {
-        return null;
+    public List<Student> getUsersList() {
+        return studentTable.getElements();
     }
 }

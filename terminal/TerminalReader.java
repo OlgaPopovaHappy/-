@@ -1,29 +1,32 @@
 package terminal;
 
-import terminal.executable.CommandExecutable;
+import terminal.executable.executables.CommandExecutable;
+import terminal.executable.factory.CommandExecutableFactory;
 
 import java.util.Scanner;
 
 public class TerminalReader {
     private static TerminalReader terminalReader;
-    private CommandParser commandParser; // парсит комманду и возвращает массив
-
-    public static TerminalReader getInstance(CommandParser commandParser) {
-        if (terminalReader == null)
-            terminalReader = new TerminalReader(commandParser);
+    private final CommandParser commandParser;
+    private final CommandExecutableFactory commandExecutableFactory;
+    public static TerminalReader getInstance(CommandExecutableFactory commandExecutableFactory) {
+        if (terminalReader == null) {
+            terminalReader = new TerminalReader(commandExecutableFactory);
+        }
         return terminalReader;
     }
-
-    private TerminalReader(CommandParser commandParser) {
-        this.commandParser = commandParser;
+    private TerminalReader(CommandExecutableFactory commandExecutableFactory) {
+        this.commandParser = new CommandParser();
+        this.commandExecutableFactory = commandExecutableFactory;
     }
-
-    public void readerInfo(int Info) {
-        Scanner sc = new Scanner(System.in);
+    public void listenToCommands() {
+        Scanner scan = new Scanner(System.in);
         while (true) {
-            String[] order = commandParser.parseCommand(sc.nextLine());
-            CommandExecutableFactory commandExecutableFactory = new CommandExecutableFactory();
-            CommandExecutable commandExecutable = commandExecutableFactory.create(order);
+            System.out.print("Ввод: ");
+            String input = scan.nextLine();
+            Command command = commandParser.parseCommand(input);
+
+            CommandExecutable commandExecutable = commandExecutableFactory.create(command);
             commandExecutable.execute();
         }
     }

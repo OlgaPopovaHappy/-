@@ -1,7 +1,8 @@
 package repository;
 
-public interface Repository<E, I> {
-    E save(E entity);
+public interface Repository<E> {
+    void save(E entity);
 
-    E findById(I id);
+    void delete(E entity);
+
 }
